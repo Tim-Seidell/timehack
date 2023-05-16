@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div><span id="timehack" style="text-align: center; font-size: 70px; font-family: Arial, Helvetica, sans-serif;">Time</span></div>
+    <div id="prompter" style="text-align: center; font-size: 25px; font-family: Arial, Helvetica, sans-serif"></div>
+    <!-- <div id="started"></div>
+    <div id="warned"></div> -->
+    <button id="selectButton" onclick="selectTimeHack()" style="text-align: center; font-size: 25px; font-family: Arial, Helvetica, sans-serif">START</button>
+</body>
+
+<script>
+    timehack = document.getElementById("timehack");
+    selectButton = document.getElementById("selectButton");
+    prompter = document.getElementById("prompter");
+    startedDiv = document.getElementById("started");
+    warnedDiv = document.getElementById("warned");
+    warned = false;
+    started = false;
+
+    function selectTimeHack() {
+        started = true;
+        prompter.innerText = "";
+    }
+
+    function setTime() {
+        time = new Date();
+
+        hours = time.getHours();
+        minutes = time.getMinutes();
+        nextMinute = minutes + 1;
+        seconds = time.getSeconds();
+        milliseconds = time.getMilliseconds();
+
+        hString = hours.toString().padStart(2, '0');
+        mString = minutes.toString().padStart(2, '0');
+        nmString = nextMinute.toString().padStart(2, '0');
+        sString = seconds.toString().padStart(2, '0');
+
+        // One minute warning
+        if(seconds >= 55 && milliseconds < 500 && !warned && started) {
+            timehack.style.backgroundColor = "green";
+            timehack.style.color = "white";
+        }
+
+        // Reset timehack once finished
+        else if (seconds == 0 && warned && started) {
+            prompter.innerText = "Hack, time is now " + hString + "" + mString + " local";
+            warned = false;
+            started = false;
+            console.log("Full reset");
+        }
+
+        // 1 minute prompt
+        else if (seconds == 0 && !warned && started) {
+            prompter.innerText = "In one minute the time will be " + hString + "" + nmString + " local";
+        }
+
+        // Clear final prompt
+        else if (seconds == 5) {
+            prompter.innerText = "";
+        }
+
+        // Continue with timehack once warned
+        else if (seconds == 1 && !warned && started) {
+            prompter.innerText = "In one minute the time will be " + hString + "" + nmString + " local";
+            warned = true;
+            console.log("warned");
+        }
+
+        // Clear one minute warning
+        else if (seconds == 5) {
+            prompter.innerText = "";
+        }
+
+        // 30 Second flash
+        else if(seconds >= 28 && seconds <= 30 && milliseconds < 500 && warned && started) {
+            timehack.style.backgroundColor = "yellow";
+            timehack.style.color = "black";
+        }
+
+        // 30 second prompt
+        else if (seconds == 30 && started && warned) {
+            prompter.innerText = "30 Seconds";
+        }
+
+        // clear 30 second prompt
+        else if (seconds == 35) {
+            prompter.innerText = "";
+        }
+
+        // 10 Second flash
+        else if(seconds >= 48 && seconds <= 50 && milliseconds < 500 && warned && started) {
+            timehack.style.backgroundColor = "orange";
+            timehack.style.color = "black";
+        }
+
+        // 10 second prompt
+        else if (seconds == 50 && started && warned) {
+            prompter.innerText = "10 Seconds, Standby";
+        }
+
+        // 5 Second countdown
+        else if(seconds >= 55 && milliseconds < 500 && warned && started) {
+            timehack.style.backgroundColor = "red";
+            timehack.style.color = "white";
+            secondString = 60 - seconds;
+            prompter.innerText = secondString.toString();
+        }
+
+        // Final prompt
+        else if (seconds == 00 && warned && started) {
+
+        }
+        
+        // Default colors
+        else {
+            timehack.style.backgroundColor = "white";
+            timehack.style.color = "black";
+        }
+
+        timehack.innerText = hString + mString + ":" + sString;
+
+        // warnedDiv.innerText = warned ? "Warned" : "Not Warned";
+        // startedDiv.innerText = started ? "Started" : "Not Started";
+    }
+
+    setTime();
+    setInterval(setTime, 100);
+</script>
+</html>
