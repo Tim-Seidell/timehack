@@ -55,7 +55,7 @@
 
         // Reset timehack once finished
         else if (seconds == 0 && warned && started) {
-            prompter.innerText = "Hack, time is now " + hString + "" + mString + " local";
+            prompter.innerText = "HACK, the time is now " + hString + "" + mString + " local";
             warned = false;
             started = false;
             console.log("Full reset");
@@ -133,6 +133,8 @@
 
         // warnedDiv.innerText = warned ? "Warned" : "Not Warned";
         // startedDiv.innerText = started ? "Started" : "Not Started";
+
+        selectButton.style.hidden = !started;
     }
 
     setTime();
