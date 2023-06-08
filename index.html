@@ -14,8 +14,6 @@
 <body>
     <div><span id="timehack" style="text-align: center; font-size: 140px; font-family: Arial, Helvetica, sans-serif;">Time</span></div>
     <div id="prompter" style="text-align: center; font-size: 50px; font-family: Arial, Helvetica, sans-serif"></div>
-    <!-- <div id="started"></div>
-    <div id="warned"></div> -->
     <button id="selectButton" onclick="selectTimeHack()" style="text-align: center; font-size: 50px; font-family: Arial, Helvetica, sans-serif">START</button>
 </body>
 
@@ -49,7 +47,7 @@
 
         // One minute warning
         if(seconds >= 55 && milliseconds < 500 && !warned && started) {
-            timehack.style.backgroundColor = "green";
+            document.body.style.backgroundColor = "green";
             timehack.style.color = "white";
         }
 
@@ -85,7 +83,7 @@
 
         // 30 Second flash
         else if(seconds >= 28 && seconds <= 30 && milliseconds < 500 && warned && started) {
-            timehack.style.backgroundColor = "yellow";
+            document.body.style.backgroundColor = "yellow";
             timehack.style.color = "black";
         }
 
@@ -101,7 +99,7 @@
 
         // 10 Second flash
         else if(seconds >= 48 && seconds <= 50 && milliseconds < 500 && warned && started) {
-            timehack.style.backgroundColor = "orange";
+            document.body.style.backgroundColor = "orange";
             timehack.style.color = "black";
         }
 
@@ -112,7 +110,7 @@
 
         // 5 Second countdown
         else if(seconds >= 55 && milliseconds < 500 && warned && started) {
-            timehack.style.backgroundColor = "red";
+            document.body.style.backgroundColor = "red";
             timehack.style.color = "white";
             secondString = 60 - seconds;
             prompter.innerText = secondString.toString();
@@ -125,7 +123,7 @@
         
         // Default colors
         else {
-            timehack.style.backgroundColor = "white";
+            document.body.style.backgroundColor = "white";
             timehack.style.color = "black";
         }
 
